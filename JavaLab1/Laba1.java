@@ -1,4 +1,3 @@
-Arisha❤️🕊, [15.09.2025 9:11]
 import java.util.Random;
 import java.util.Scanner;
 
