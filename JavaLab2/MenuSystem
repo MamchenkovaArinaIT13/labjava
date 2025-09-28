@@ -1,0 +1,538 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class MenuSystem {
+    private Scanner scanner;
+
+    public MenuSystem() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public void showMainMenu() {
+        while (true) {
+            System.out.println("\n=== ГЛАВНОЕ МЕНЮ ===");
+            System.out.println("1. Автоматический ввод (готовые данные)");
+            System.out.println("2. Ручной ввод данных");
+            System.out.println("3. Выход");
+            System.out.print("Выберите опцию: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    autoInputMenu();
+                    break;
+                case "2":
+                    manualInputMenu();
+                    break;
+                case "3":
+                    System.out.println("Выход из программы...");
+                    return;
+                default:
+                    System.out.println("Неверный выбор! Пожалуйста, выберите 1, 2 или 3.");
+            }
+        }
+    }
+
+    private void autoInputMenu() {
+        while (true) {
+            System.out.println("\n=== АВТОМАТИЧЕСКИЙ ВВОД ===");
+            System.out.println("Выберите задание (будут использованы готовые данные):");
+            System.out.println("1. Задача 3 - Класс Name");
+            System.out.println("2. Задача 5 - Класс House");
+            System.out.println("3. Задача 4 - Классы Departament и Employee");
+            System.out.println("4. Задача 4 - Получение всех сотрудников отдела");
+            System.out.println("5. Задача 5 - Альтернативный формат Name");
+            System.out.println("6. Задача 5 - Класс Fraction");
+            System.out.println("0. Назад в главное меню");
+            System.out.print("Ваш выбор задания: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    executeAutoTask1();
+                    break;
+                case "2":
+                    executeAutoTask2();
+                    break;
+                case "3":
+                    executeAutoTask3();
+                    break;
+                case "4":
+                    executeAutoTask4();
+                    break;
+                case "5":
+                    executeAutoTask5();
+                    break;
+                case "6":
+                    executeAutoTask6();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("Неверный номер задания! Выберите от 0 до 6.");
+            }
+        }
+    }
+
+    // Авто ввод методы задач
+    private void executeAutoTask1() {
+        System.out.println("\n--- Задача 3: Класс Name ---");
+        System.out.println("Создание объектов Name с разными параметрами:");
+
+        Name person1 = new Name("Клеопатра");
+        Name person2 = new Name("Пушкин", "Александр", "Сергеевич");
+        Name person3 = new Name("Маяковский", "Владимир");
+
+        System.out.println("Только имя: " + person1);
+        System.out.println("Полное ФИО: " + person2);
+        System.out.println("Фамилия и имя: " + person3);
+    }
+
+    private void executeAutoTask2() {
+        System.out.println("\n--- Задача 5: Класс House ---");
+        System.out.println("Создание домов с разным количеством этажей:");
+
+        House house1 = new House(1);
+        House house2 = new House(5);
+        House house3 = new House(23);
+        House invalidHouse = new House(0);
+
+        System.out.println("1 этаж: " + house1);
+        System.out.println("5 этажей: " + house2);
+        System.out.println("23 этажа: " + house3);
+        System.out.println("0 этажей: " + invalidHouse);
+    }
+
+    private void executeAutoTask3() {
+        System.out.println("\n--- Задача 4: Классы Departament и Employee ---");
+        System.out.println("Создание отдела и сотрудников с назначением менеджера:");
+
+        Departament departament = new Departament("IT");
+        Employee employee1 = new Employee("Козлов", departament);
+        Employee employee2 = new Employee("Петров", departament);
+        Employee employee3 = new Employee("Сидоров", departament);
+
+        departament.setManager(employee1);
+
+        System.out.println(employee1);
+        System.out.println(employee2);
+        System.out.println(employee3);
+    }
+
+    private void executeAutoTask4() {
+        System.out.println("\n--- Задача 4: Получение всех сотрудников отдела ---");
+        System.out.println("Демонстрация получения списка сотрудников через разных сотрудников:");
+
+        Departament departament = new Departament("IT");
+        Employee employee1 = new Employee("Козлов", departament);
+        Employee employee2 = new Employee("Петров", departament);
+        Employee employee3 = new Employee("Сидоров", departament);
+
+        departament.setManager(employee1);
+
+        System.out.println("Список сотрудников IT отдела (через Козлова):");
+        List<Employee> employeesFromKozlov = employee1.getAllDepartmentEmployees();
+        for (Employee emp : employeesFromKozlov) {
+            System.out.println("- " + emp.getName());
+        }
+
+        System.out.println("\nСписок сотрудников IT отдела (через Петрова):");
+        List<Employee> employeesFromPetrov = employee2.getAllDepartmentEmployees();
+        for (Employee emp : employeesFromPetrov) {
+            System.out.println("- " + emp.getName());
+        }
+    }
+
+    private void executeAutoTask5() {
+        System.out.println("\n--- Задача 5: Альтернативный формат Name ---");
+        System.out.println("Демонстрация альтернативного формата вывода имен:");
+
+        Name cleopatra = new Name("Клеопатра");
+        Name pushkin = new Name("Пушкин", "Александр", "Сергеевич");
+        Name mayakovskiy = new Name("Маяковский", "Владимир");
+        Name hristofor = new Name("Бонифатьевич", "Христофор");
+
+        System.out.println("Клеопатра: " + cleopatra.toStringNow());
+        System.out.println("Пушкин: " + pushkin.toStringNow());
+        System.out.println("Маяковский: " + mayakovskiy.toStringNow());
+        System.out.println("Христофор: " + hristofor.toStringNow());
+    }
+
+    private void executeAutoTask6() {
+        System.out.println("\n--- Задача 5: Класс Fraction ---");
+        System.out.println("Демонстрация работы с дробями:");
+
+        Fraction f1 = new Fraction(1, 3);
+        Fraction f2 = new Fraction(2, 3);
+        Fraction f3 = new Fraction(3, 4);
+        Fraction f4 = new Fraction(5, 6);
+
+        System.out.println("Созданные дроби:");
+        System.out.println("f1 = " + f1);
+        System.out.println("f2 = " + f2);
+        System.out.println("f3 = " + f3);
+        System.out.println("f4 = " + f4);
+
+        System.out.println("\nАрифметические операции:");
+        System.out.println(f1 + " + " + f2 + " = " + f1.add(f2));
+        System.out.println(f3 + " - " + f4 + " = " + f3.subtract(f4));
+        System.out.println(f1 + " * " + f2 + " = " + f1.multiply(f2));
+        System.out.println(f3 + " / " + f4 + " = " + f3.divide(f4));
+
+        System.out.println("\nЦепные операции:");
+        Fraction result = f1.add(f2).divide(f3).subtract(1);
+        System.out.println("(" + f1 + " + " + f2 + ") / " + f3 + " - 1 = " + result);
+    }
+
+    private void manualInputMenu() {
+        while (true) {
+            System.out.println("\n=== РУЧНОЙ ВВОД ДАННЫХ ===");
+            System.out.println("Выберите категорию для ручного ввода:");
+            System.out.println("1. Работа с классом Name");
+            System.out.println("2. Работа с классом House");
+            System.out.println("3. Работа с классами Departament и Employee");
+            System.out.println("4. Работа с классом Fraction");
+            System.out.println("0. Назад в главное меню");
+            System.out.print("Выберите опцию: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    manualNameMenu();
+                    break;
+                case "2":
+                    manualHouseMenu();
+                    break;
+                case "3":
+                    manualDepartmentMenu();
+                    break;
+                case "4":
+                    manualFractionMenu();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("Неверный выбор! Пожалуйста, выберите от 0 до 4.");
+            }
+        }
+    }
+
+    private void manualNameMenu() {
+        while (true) {
+            System.out.println("\n=== РУЧНОЙ ВВОД: КЛАСС NAME ===");
+            System.out.println("Выберите тип создания Name:");
+            System.out.println("1. Создать Name только с именем");
+            System.out.println("2. Создать Name с фамилией и именем");
+            System.out.println("3. Создать Name с фамилией, именем и отчеством");
+            System.out.println("4. Показать оба формата вывода");
+            System.out.println("5. Альтернативный формат Name (только имя)");
+            System.out.println("6. Альтернативный формат Name (фамилия и имя)");
+            System.out.println("7. Альтернативный формат Name (полное ФИО)");
+            System.out.println("0. Назад к выбору категории");
+            System.out.print("Ваш выбор: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1":
+                    createNameWithFirstNameOnly();
+                    break;
+                case "2":
+                    createNameWithLastAndFirstName();
+                    break;
+                case "3":
+                    createNameWithAllFields();
+                    break;
+                case "4":
+                    demonstrateNameFormats();
+                    break;
+                case "5":
+                    createNameAlternativeFirstNameOnly();
+                    break;
+                case "6":
+                    createNameAlternativeLastAndFirstName();
+                    break;
+                case "7":
+                    createNameAlternativeAllFields();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("Неверный выбор! Выберите от 0 до 7.");
+            }
+        }
+    }
+
+    private void createNameWithFirstNameOnly() {
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        Name name = new Name(firstName);
+        System.out.println("Создан объект (обычный формат): " + name);
+    }
+
+    private void createNameWithLastAndFirstName() {
+        System.out.print("Введите фамилию: ");
+        String lastName = getValidNameInput("фамилию");
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        Name name = new Name(lastName, firstName);
+        System.out.println("Создан объект (обычный формат): " + name);
+    }
+
+    private void createNameWithAllFields() {
+        System.out.print("Введите фамилию: ");
+        String lastName = getValidNameInput("фамилию");
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        System.out.print("Введите отчество: ");
+        String surName = getValidNameInput("отчество");
+        Name name = new Name(lastName, firstName, surName);
+        System.out.println("Создан объект (обычный формат): " + name);
+    }
+
+    private void demonstrateNameFormats() {
+        System.out.print("Введите фамилию: ");
+        String lastName = getValidNameInput("фамилию");
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        System.out.print("Введите отчество: ");
+        String surName = getValidNameInput("отчество");
+
+        Name name = new Name(lastName, firstName, surName);
+        System.out.println("\nРезультат:");
+        System.out.println("Обычный формат: " + name);
+        System.out.println("Альтернативный формат: " + name.toStringNow());
+    }
+
+    private void createNameAlternativeFirstNameOnly() {
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        Name name = new Name(firstName);
+        System.out.println("Создан объект Name:");
+        System.out.println("Обычный формат: " + name);
+        System.out.println("Альтернативный формат: " + name.toStringNow());
+    }
+
+    private void createNameAlternativeLastAndFirstName() {
+        System.out.print("Введите фамилию: ");
+        String lastName = getValidNameInput("фамилию");
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        Name name = new Name(lastName, firstName);
+        System.out.println("Создан объект Name:");
+        System.out.println("Обычный формат: " + name);
+        System.out.println("Альтернативный формат: " + name.toStringNow());
+    }
+
+    private void createNameAlternativeAllFields() {
+        System.out.print("Введите фамилию: ");
+        String lastName = getValidNameInput("фамилию");
+        System.out.print("Введите имя: ");
+        String firstName = getValidNameInput("имя");
+        System.out.print("Введите отчество: ");
+        String surName = getValidNameInput("отчество");
+        Name name = new Name(lastName, firstName, surName);
+        System.out.println("Создан объект Name:");
+        System.out.println("Обычный формат: " + name);
+        System.out.println("Альтернативный формат: " + name.toStringNow());
+    }
+
+    private void manualHouseMenu() {
+        System.out.println("\n=== РУЧНОЙ ВВОД: КЛАСС HOUSE ===");
+        System.out.print("Введите количество этажей: ");
+        int floors = getIntInput();
+        House house = new House(floors);
+        System.out.println("Результат: " + house);
+    }
+
+    private void manualDepartmentMenu() {
+        System.out.println("\n=== РУЧНОЙ ВВОД: КЛАССЫ DEPARTAMENT И EMPLOYEE ===");
+
+        System.out.print("Введите название отдела: ");
+        String deptName = getValidTextInput("название отдела");
+        Departament department = new Departament(deptName);
+
+        System.out.print("Введите количество сотрудников: ");
+        int employeeCount = getPositiveIntInput();
+
+        List<Employee> employees = new ArrayList<>();
+        for (int i = 0; i < employeeCount; i++) {
+            System.out.print("Введите имя сотрудника " + (i + 1) + ": ");
+            String empName = getValidNameInput("имя сотрудника");
+            Employee employee = new Employee(empName, department);
+            employees.add(employee);
+        }
+
+        if (employeeCount > 0) {
+            System.out.print("Введите номер сотрудника, который будет менеджером (1-" + employeeCount + "): ");
+            int managerIndex = getIntInRange(1, employeeCount) - 1;
+
+            department.setManager(employees.get(managerIndex));
+            System.out.println("Менеджер назначен: " + employees.get(managerIndex).getName());
+        }
+
+        System.out.println("\nРезультат:");
+        for (Employee emp : employees) {
+            System.out.println(emp);
+        }
+
+        if (employeeCount > 0) {
+            // Вывод списка через первого сотрудника
+            Employee firstEmployee = employees.get(0);
+            System.out.println("\nСписок всех сотрудников отдела через " + firstEmployee.getName() + ":");
+            List<Employee> allEmployees = firstEmployee.getAllDepartmentEmployees();
+            for (Employee emp : allEmployees) {
+                System.out.println("- " + emp.getName());
+            }
+        }
+    }
+
+    private void manualFractionMenu() {
+        System.out.println("\n=== РУЧНОЙ ВВОД: КЛАСС FRACTION ===");
+
+        System.out.print("Введите числитель первой дроби: ");
+        int num1 = getIntInput();
+        System.out.print("Введите знаменатель первой дроби: ");
+        int den1 = getNonZeroIntInput();
+
+        Fraction fraction1 = new Fraction(num1, den1);
+        System.out.println("Первая дробь: " + fraction1);
+
+        System.out.print("Введите числитель второй дроби: ");
+        int num2 = getIntInput();
+        System.out.print("Введите знаменатель второй дроби: ");
+        int den2 = getNonZeroIntInput();
+
+        Fraction fraction2 = new Fraction(num2, den2);
+        System.out.println("Вторая дробь: " + fraction2);
+
+        System.out.println("\nРезультаты операций:");
+        System.out.println(fraction1 + " + " + fraction2 + " = " + fraction1.add(fraction2));
+        System.out.println(fraction1 + " - " + fraction2 + " = " + fraction1.subtract(fraction2));
+        System.out.println(fraction1 + " * " + fraction2 + " = " + fraction1.multiply(fraction2));
+
+        try {
+            System.out.println(fraction1 + " / " + fraction2 + " = " + fraction1.divide(fraction2));
+        } catch (ArithmeticException e) {
+            System.out.println(fraction1 + " / " + fraction2 + " = Ошибка: " + e.getMessage());
+        }
+    }
+
+    // Методы для проверки ввода
+    private String getNonEmptyInput(String errorMessage) {
+        String input;
+        while (true) {
+            input = scanner.nextLine().trim();
+            if (!input.isEmpty()) {
+                return input;
+            }
+            System.out.print(errorMessage);
+        }
+    }
+
+    private String getValidNameInput(String fieldName) {
+        while (true) {
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.print("Ошибка! " + fieldName + " не может быть пустым. Введите " + fieldName + ": ");
+                continue;
+            }
+
+            if (containsNumbers(input)) {
+                System.out.print("Ошибка! " + fieldName + " не может содержать цифры. Введите " + fieldName + ": ");
+                continue;
+            }
+
+            if (!isValidName(input)) {
+                System.out.print("Ошибка! " + fieldName + " содержит недопустимые символы. Введите " + fieldName + ": ");
+                continue;
+            }
+
+            return input;
+        }
+    }
+
+    private String getValidTextInput(String fieldName) {
+        while (true) {
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.print("Ошибка! " + fieldName + " не может быть пустым. Введите " + fieldName + ": ");
+                continue;
+            }
+
+            if (!isValidText(input)) {
+                System.out.print("Ошибка! " + fieldName + " содержит недопустимые символы. Введите " + fieldName + ": ");
+                continue;
+            }
+
+            return input;
+        }
+    }
+
+    private boolean containsNumbers(String text) {
+        return text.matches(".*\\d.*");
+    }
+
+    private boolean isValidName(String name) {
+        // Разрешаем только буквы русского и английского алфавита, дефисы и пробелы
+        return name.matches("^[a-zA-Zа-яА-ЯёЁ\\-\\s]+$");
+    }
+
+    private boolean isValidText(String text) {
+        // Разрешаем буквы, цифры, пробелы и основные пунктуационные знаки
+        return text.matches("^[a-zA-Zа-яА-ЯёЁ0-9\\-\\s.,!?()]+$");
+    }
+
+    private int getIntInput() {
+        while (true) {
+            try {
+                String input = scanner.nextLine().trim();
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.print("Ошибка! Введите целое число: ");
+            }
+        }
+    }
+
+    private int getPositiveIntInput() {
+        while (true) {
+            int number = getIntInput();
+            if (number > 0) {
+                return number;
+            }
+            System.out.print("Ошибка! Введите положительное число: ");
+        }
+    }
+
+    private int getNonZeroIntInput() {
+        while (true) {
+            int number = getIntInput();
+            if (number != 0) {
+                return number;
+            }
+            System.out.print("Ошибка! Число не может быть нулем. Введите другое число: ");
+        }
+    }
+
+    private int getIntInRange(int min, int max) {
+        while (true) {
+            int number = getIntInput();
+            if (number >= min && number <= max) {
+                return number;
+            }
+            System.out.print("Ошибка! Введите число от " + min + " до " + max + ": ");
+        }
+    }
+
+    public void close() {
+        if (scanner != null) {
+            scanner.close();
+        }
+    }
+}
